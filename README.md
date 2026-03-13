@@ -2,7 +2,7 @@
 
 ## Demo steps
 
-### 1. Clone and reset to the pre-deadline commit
+### 1. During the demo, git clone the CDK and code repo.
 
 ```powershell
 git clone https://github.com/QZGao/CS6620-Assignment3-CDK.git
@@ -33,54 +33,15 @@ cdk bootstrap
 cdk deploy --all --require-approval never
 ```
 
-### 5. Show the stacks in CloudFormation
+### 5. Go to the Cloudformation console and show the stacks.
 
-Stacks to show:
+TA - please check the stack creation timestamp.
 
-* `DataStack`
-* `ComputeStack`
-* `ApiStack`
-* `IntegrationStack`
+TA - please check that under the resources tab of the stacks, it collectively shows three lambdas, one S3 bucket, one DynamoDB table, one REST API.
 
-TA checks:
+### 6. Manually invoke the newly created driver lambda in AWS console. 
 
-* stack creation timestamps
-* resources collectively include 3 Lambdas, 1 S3 bucket, 1 DynamoDB table, 1 REST API
-
-### 6. Get the driver Lambda name
-
-```powershell
-aws cloudformation describe-stacks --stack-name IntegrationStack --query "Stacks[0].Outputs[?OutputKey=='DriverFunctionName'].OutputValue" --output text
-```
-
-### 7. Invoke the driver Lambda
-
-```powershell
-aws lambda invoke --function-name <DRIVER_FUNCTION_NAME> --cli-binary-format raw-in-base64-out --payload '{}' response.json
-
-cat response.json
-```
-
-### 8. Get the bucket and table names
-
-```powershell
-aws cloudformation describe-stacks --stack-name DataStack --query "Stacks[0].Outputs[?OutputKey=='BucketName'].OutputValue" --output text
-
-aws cloudformation describe-stacks --stack-name DataStack --query "Stacks[0].Outputs[?OutputKey=='TableName'].OutputValue" --output text
-```
-
-### 9. Show the DynamoDB contents and generated plot
-
-```powershell
-aws dynamodb scan --table-name <TABLE_NAME>
-aws s3 ls s3://<BUCKET_NAME>
-aws s3 cp s3://<BUCKET_NAME>/plot ./plot.png
-```
-
-TA checks:
-
-* DynamoDB table contains the size history records
-* the plot object is generated in the bucket
+TA - please check the contents of the DDB table, also check the newly generated plot.
 
 ### 0. Clean up before the demo
 

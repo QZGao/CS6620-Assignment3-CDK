@@ -25,11 +25,11 @@ def lambda_handler(event, context):
 
     max_records = table.query(
         IndexName='global_max_size_index',
-        KeyConditionExpression=True,
+        KeyConditionExpression=Key('gsi1pk').eq('GLOBAL_MAX'),
         ScanIndexForward=False,
         Limit=1
     ).get('Items', [])
-    global_max_size_bytes = max_records[0]['total_size_bytes'] if max_records else 0
+    global_max_size_bytes = int(max_records[0]['total_size_bytes']) if max_records else 0
 
     recent_records.sort(key=lambda x: int(x['timestamp_epoch_ms']))
     X = [int(item['timestamp_epoch_ms']) for item in recent_records]

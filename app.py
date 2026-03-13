@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import os
-import dotenv
 import aws_cdk as cdk
 from stacks import *
-
-dotenv.load_dotenv()
 
 app = cdk.App()
 

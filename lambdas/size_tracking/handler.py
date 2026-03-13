@@ -31,7 +31,7 @@ def lambda_handler(event, context):
             "timestamp_iso": timestamp_iso,
             "total_size_bytes": total_size_bytes,
             "total_object_count": total_object_count,
-            "gsi1pk": "any name here works anyway"
+            "gsi1pk": "GLOBAL_MAX"
         }
     )
 

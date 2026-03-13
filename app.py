@@ -7,7 +7,7 @@ app = cdk.App()
 
 data = DataStack(
     app,
-    "DataStack"
+    "DataStack",
 )
 
 compute = ComputeStack(
@@ -28,7 +28,6 @@ integration = IntegrationStack(
     app,
     "IntegrationStack",
     bucket=data.bucket,
-    size_tracking_function=compute.size_tracking_function,
     plot_api_url=api.plot_url
 )
 

@@ -14,19 +14,6 @@ class ComputeStack(cdk.Stack):
             matplotlib_layer_arn,
         )
 
-        self.size_tracking_function = lambda_.Function(
-            self,
-            'SizeTrackingFunction',
-            runtime=lambda_.Runtime.PYTHON_3_12,
-            handler='handler.lambda_handler',
-            code=lambda_.Code.from_asset('lambdas/size_tracking'),
-            timeout=cdk.Duration.seconds(30),
-            environment={
-                'BUCKET_NAME': bucket.bucket_name,
-                'TABLE_NAME': table.table_name,
-            }
-        )
-
         self.plotting_function = lambda_.Function(
             self,
             'PlottingFunction',
@@ -44,7 +31,5 @@ class ComputeStack(cdk.Stack):
             }
         )
 
-        bucket.grant_read(self.size_tracking_function)
-        table.grant_write_data(self.size_tracking_function)
         table.grant_read_data(self.plotting_function)
         bucket.grant_put(self.plotting_function)
